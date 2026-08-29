@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXORA — Donde nacen los mundos</title>
+<meta name="description" content="NEXORA — Comunidad, creatividad y conexión.">
+<style>
+:root{--bg:#050511;--text:#f7f8ff;--muted:#a9afd0;--cyan:#42dcff;--violet:#866cff;--pink:#ff55d8;--orange:#ff9c55}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,system-ui,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:-30%;z-index:-3;background:radial-gradient(circle at 50% 20%,#28175e 0,transparent 25%),radial-gradient(circle at 15% 65%,#082c4e 0,transparent 22%),radial-gradient(circle at 85% 75%,#491346 0,transparent 20%);filter:blur(30px);animation:drift 14s ease-in-out infinite alternate}
+body:after{content:"";position:fixed;inset:0;z-index:-2;opacity:.18;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:55px 55px}
+nav{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px 6%;backdrop-filter:blur(18px);background:#05051188;border-bottom:1px solid #ffffff12}
+.brand{display:flex;align-items:center;gap:11px;letter-spacing:3px;font-weight:800}.mini{width:34px;height:34px;border:2px solid var(--cyan);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 22px #42dcff66;transform:rotate(25deg)}.mini:after{content:"✦";transform:rotate(-25deg);color:white}
+nav a{color:#cdd1eb;text-decoration:none;margin-left:28px;font-size:14px}nav a:hover{color:white}
+.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:130px 7% 70px;position:relative}.orbit{position:absolute;width:min(72vw,700px);aspect-ratio:1;border:1px solid #42dcff33;border-radius:50%;box-shadow:0 0 100px #694dff1c,inset 0 0 80px #42dcff10;animation:spin 24s linear infinite}.orbit:before,.orbit:after{content:"";position:absolute;border-radius:50%;inset:12%;border:1px dashed #ff55d833}.orbit:after{inset:25%;border-color:#ff9c5540}
+.logo{position:relative;width:180px;height:180px;margin:0 auto 35px;display:grid;place-items:center}.logo .ring{position:absolute;inset:0;border-radius:50%;border:5px solid transparent;border-top-color:var(--cyan);border-right-color:var(--pink);filter:drop-shadow(0 0 18px #42dcff99);transform:rotate(-20deg)}.logo .core{width:92px;height:92px;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffb0e9 9%,#886cff 35%,#241d6b 70%);box-shadow:0 0 35px #866cffaa,0 0 90px #42dcff55}.logo .blade{position:absolute;width:75px;height:75px;border:5px solid white;border-left:0;border-bottom:0;transform:rotate(45deg);filter:drop-shadow(0 0 10px #ff55d8)}
+h1{font-size:clamp(46px,10vw,105px);line-height:.9;letter-spacing:8px;margin:0;background:linear-gradient(90deg,#fff,var(--cyan),#c59cff,var(--pink));-webkit-background-clip:text;color:transparent}.tag{letter-spacing:5px;color:#c8d2ff;margin:22px 0 28px;font-size:clamp(11px,2vw,15px)}.lead{max-width:650px;margin:auto;color:var(--muted);font-size:18px;line-height:1.7}.buttons{margin-top:35px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}.btn{padding:14px 23px;border-radius:999px;text-decoration:none;font-weight:700;border:1px solid #ffffff22;color:white;background:#ffffff0b;backdrop-filter:blur(10px)}.btn.primary{background:linear-gradient(90deg,#42dcff,#866cff,#ff55d8);border:0;box-shadow:0 10px 35px #866cff44}
+section{padding:110px 7%;max-width:1200px;margin:auto}.eyebrow{color:var(--cyan);letter-spacing:4px;font-size:12px}.section-title{font-size:clamp(30px,5vw,55px);margin:12px 0 18px}.section-copy{color:var(--muted);max-width:700px;line-height:1.75}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:45px}.card{padding:28px;border:1px solid #ffffff14;border-radius:24px;background:linear-gradient(145deg,#ffffff0b,#ffffff03);transition:.35s}.card:hover{transform:translateY(-7px);border-color:#42dcff55;box-shadow:0 20px 50px #0008,0 0 35px #42dcff10}.icon{font-size:30px;margin-bottom:20px}.card h3{font-size:17px}.card p{color:var(--muted);line-height:1.65;font-size:14px}
+.manifesto{margin-top:40px;padding:55px;border-radius:30px;text-align:center;background:radial-gradient(circle at 50%,#866cff18,transparent 65%),#ffffff05;border:1px solid #ffffff15}.manifesto p{font-size:clamp(20px,4vw,38px);line-height:1.4;margin:0}.manifesto span{background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;color:transparent}
+footer{padding:60px 7%;border-top:1px solid #ffffff12;text-align:center;color:#747b9c;font-size:13px}footer strong{letter-spacing:2px}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes drift{to{transform:translate(3%,2%) scale(1.08)}}
+@media(max-width:760px){nav div.links{display:none}.grid{grid-template-columns:1fr}.hero{padding-top:120px}.orbit{width:115vw}.logo{transform:scale(.82)}}
+</style></head>
+<body>
+<nav><div class="brand"><span class="mini"></span>NEXORA</div><div class="links"><a href="#vision">Visión</a><a href="#universo">Universo</a><a href="#manifiesto">Manifiesto</a></div></nav>
+<main>
+<section class="hero"><div class="orbit"></div><div>
+<div class="logo"><div class="ring"></div><div class="blade"></div><div class="core"></div></div>
+<h1>NEXORA</h1><div class="tag">COMUNIDAD · CREATIVIDAD · CONEXIÓN</div>
+<p class="lead">Un nuevo espacio digital para descubrir personas, crear comunidades y construir mundos propios.</p>
+<div class="buttons"><a class="btn primary" href="#vision">Explorar NEXORA</a><a class="btn" href="#manifiesto">Nuestra visión</a></div>
+</div></section>
+<section id="vision"><div class="eyebrow">01 / VISIÓN</div><h2 class="section-title">No queremos otra red social.</h2><p class="section-copy">Queremos crear un universo. Un lugar donde una conversación pueda convertirse en una amistad, una idea en una comunidad y una comunidad en una historia.</p>
+<div class="manifesto"><p>“Donde las personas no solo <span>entran.</span><br>Donde las personas <span>pertenecen.</span>”</p></div></section>
+<section id="universo"><div class="eyebrow">02 / UNIVERSO</div><h2 class="section-title">Tu mundo. Tus reglas.</h2><p class="section-copy">NEXORA nace con una arquitectura pensada para que la comunidad sea el centro.</p>
+<div class="grid">
+<article class="card"><div class="icon">✦</div><h3>COMUNIDADES</h3><p>Crea o encuentra espacios alrededor de tus intereses, fandoms, juegos y pasiones.</p></article>
+<article class="card"><div class="icon">◉</div><h3>FIESTAS</h3><p>Salas vivas para conversar, conocer gente y compartir momentos en tiempo real.</p></article>
+<article class="card"><div class="icon">◇</div><h3>IDENTIDAD</h3><p>Un perfil que no sea solamente una foto: tu presencia dentro del universo NEXORA.</p></article>
+<article class="card"><div class="icon">⌁</div><h3>CREATIVIDAD</h3><p>Publica, crea historias, comparte ideas y deja que otros descubran lo que haces.</p></article>
+<article class="card"><div class="icon">∞</div><h3>CONEXIÓN</h3><p>Mensajes, amistades y conexiones diseñadas alrededor de personas reales.</p></article>
+<article class="card"><div class="icon">✧</div><h3>DESCUBRIMIENTO</h3><p>Explora nuevos círculos y encuentra lugares donde realmente quieras quedarte.</p></article>
+</div></section>
+<section id="manifiesto"><div class="eyebrow">03 / MANIFIESTO</div><h2 class="section-title">El universo recién comienza.</h2><p class="section-copy">NEXORA todavía está naciendo. Esta web es el primer portal: la primera pieza de una plataforma que irá creciendo junto con su comunidad.</p><div class="buttons"><a class="btn primary" href="mailto:hola@nexora.social">Quiero ser parte</a></div></section>
+</main><footer><strong>NEXORA</strong><br><br>COMUNIDAD · CREATIVIDAD · CONEXIÓN<br><br>© 2026 NEXORA — El universo recién comienza.</footer>
+</body></html>
