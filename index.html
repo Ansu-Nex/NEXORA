@@ -7,142 +7,267 @@
 <title>NEXORA</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#09090f;color:#f5f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-button{font:inherit}.hidden{display:none!important}.app{min-height:100vh;max-width:720px;margin:auto;padding-bottom:84px}
-header{padding:22px 20px 12px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:28px;font-weight:900;letter-spacing:.5px}.logo span{opacity:.6}
-.user-mini{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#20202b}
-main{padding:8px 16px}.hero{padding:28px 20px;border:1px solid #242432;border-radius:24px;background:linear-gradient(145deg,#151521,#0e0e16)}
-.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#aaaabb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.card{border:1px solid #242432;background:#12121b;border-radius:18px;padding:18px;min-height:105px}.icon{font-size:25px}.card b{display:block;margin-top:10px}.card small{color:#9292a5}
+body{padding-bottom:env(safe-area-inset-bottom)}button,input{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.app{min-height:100vh;max-width:720px;margin:auto;padding-bottom:88px}header{padding:20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:28px;font-weight:900}.logo span{opacity:.6}.avatar-mini{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#222}
+main{padding:8px 16px}.hero,.panel{padding:22px;border:1px solid #282834;border-radius:22px;background:#12121b}.hero h1{margin:0 0 7px;font-size:32px}.hero p,.muted{color:#9999aa}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{border:1px solid #282834;background:#12121b;border-radius:18px;padding:18px;min-height:105px}.card b{display:block;margin-top:9px}.card small{color:#9292a5}
 .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}.login-box{width:100%;max-width:430px;text-align:center;padding:34px 24px;border:1px solid #292936;border-radius:28px;background:#11111a}
-.login-box h1{font-size:42px;margin:0 0 8px}.login-box p{color:#9999aa;margin:0 0 28px}.google{width:100%;border:0;border-radius:14px;padding:15px;background:#fff;color:#111;font-weight:700;cursor:pointer}
-.google:disabled{opacity:.65;cursor:wait}.error{color:#ff7d7d;font-size:13px;margin-top:14px;line-height:1.45}
-.profile{display:flex;gap:16px;align-items:center;padding:22px;border:1px solid #292936;border-radius:22px;background:#12121b}.profile img{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#222}
-.profile h2{margin:0 0 5px}.profile p{margin:0;color:#9999aa;word-break:break-word}.logout{margin-top:18px;width:100%;padding:13px;border:1px solid #393946;border-radius:13px;background:#181821;color:#fff;cursor:pointer}
-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:720px;height:72px;background:rgba(12,12,18,.97);border-top:1px solid #292936;display:flex;justify-content:space-around;align-items:center;z-index:5;overflow-x:auto}
-nav button{background:none;border:0;color:#777789;font-size:10px;min-width:58px;display:flex;flex-direction:column;gap:4px;align-items:center;cursor:pointer}nav button.active{color:#fff}nav span{font-size:20px}.section-title{font-size:24px;margin:12px 4px 18px}
+.login-box h1{font-size:42px;margin:0 0 8px}.login-box p{color:#9999aa;margin:0 0 28px}.google,.primary{width:100%;border:0;border-radius:14px;padding:14px;font-weight:750}.google{background:#fff;color:#111}.primary{background:#fff;color:#111}
+.google:disabled,.primary:disabled{opacity:.6;cursor:wait}.error{color:#ff8585;font-size:13px;margin-top:13px;line-height:1.45}
+.profile-head{display:flex;gap:16px;align-items:center}.profile-head img{width:82px;height:82px;border-radius:50%;object-fit:cover;background:#222}.profile-head h2{margin:0 0 5px}.profile-head p{margin:0;color:#9999aa;word-break:break-word}
+.field{margin-top:18px}.field label{display:block;font-size:13px;color:#aaaabb;margin-bottom:7px}.field input{width:100%;padding:13px;border-radius:12px;border:1px solid #343441;background:#0d0d14;color:#fff;outline:none}.field input:focus{border-color:#777}
+.row{display:flex;gap:10px;margin-top:14px}.row>*{flex:1}.secondary,.logout{width:100%;padding:12px;border:1px solid #363642;border-radius:12px;background:#181820;color:#fff}.info{margin-top:18px;padding:14px;border-radius:14px;background:#0d0d14}.info div{padding:7px 0;border-bottom:1px solid #24242e}.info div:last-child{border-bottom:0}.info b{font-size:12px;color:#9292a5;display:block}.info span{font-size:14px}
+.notice{margin-top:12px;padding:11px 13px;border-radius:12px;background:#171721;color:#bdbdca;font-size:13px}.ok{color:#9ee6b0}.danger{color:#ff8e8e}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:720px;height:76px;background:rgba(12,12,18,.98);border-top:1px solid #292936;display:flex;justify-content:space-around;align-items:center;z-index:5;overflow-x:auto}
+nav button{background:none;border:0;color:#777789;font-size:10px;min-width:58px;display:flex;flex-direction:column;gap:4px;align-items:center}nav button.active{color:#fff}nav span{font-size:20px}.title{font-size:24px;margin:12px 4px 18px}
+@media(max-width:380px){nav button{min-width:50px;font-size:9px}.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <div id="login" class="login">
   <div class="login-box">
-    <h1>NEXORA</h1>
-    <p>Tu espacio. Tu comunidad. Tu mundo.</p>
+    <h1>NEXORA</h1><p>Tu espacio. Tu comunidad. Tu mundo.</p>
     <button id="googleBtn" class="google">Continuar con Google</button>
-    <div id="error" class="error"></div>
+    <div id="loginError" class="error"></div>
   </div>
 </div>
 
 <div id="app" class="app hidden">
-  <header><div class="logo">NEXORA<span>.</span></div><img id="miniAvatar" class="user-mini" alt="Perfil"></header>
-  <main id="content"></main>
-  <nav>
-    <button data-page="home" class="active"><span>⌂</span>Inicio</button>
-    <button data-page="explore"><span>⌕</span>Explorar</button>
-    <button data-page="chats"><span>◌</span>Chats</button>
-    <button data-page="alerts"><span>♧</span>Alertas</button>
-    <button data-page="communities"><span>♙</span>Comunidades</button>
-    <button data-page="profile"><span>●</span>Perfil</button>
-  </nav>
+<header><div class="logo">NEXORA<span>.</span></div><img id="miniAvatar" class="avatar-mini" alt="Perfil"></header>
+<main id="content"></main>
+<nav>
+<button data-page="home" class="active"><span>⌂</span>Inicio</button>
+<button data-page="explore"><span>⌕</span>Explorar</button>
+<button data-page="chats"><span>◌</span>Chats</button>
+<button data-page="alerts"><span>♧</span>Alertas</button>
+<button data-page="communities"><span>♙</span>Comunidades</button>
+<button data-page="profile"><span>●</span>Perfil</button>
+</nav>
 </div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
-  initializeAuth,browserLocalPersistence,browserSessionPersistence,
-  browserPopupRedirectResolver,GoogleAuthProvider,signInWithPopup,
-  onAuthStateChanged,signOut
+ initializeAuth,browserLocalPersistence,browserSessionPersistence,browserPopupRedirectResolver,
+ GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {
+ getFirestore,doc,getDoc,setDoc,updateDoc,serverTimestamp,runTransaction,collection,query,where,getDocs
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
-  authDomain:"nexora-95988.firebaseapp.com",
-  projectId:"nexora-95988",
-  storageBucket:"nexora-95988.firebasestorage.app",
-  messagingSenderId:"799958541592",
-  appId:"1:799958541592:web:bb938420b4460ab8916a6d"
+ apiKey:"AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
+ authDomain:"nexora-95988.firebaseapp.com",
+ projectId:"nexora-95988",
+ storageBucket:"nexora-95988.firebasestorage.app",
+ messagingSenderId:"799958541592",
+ appId:"1:799958541592:web:bb938420b4460ab8916a6d"
 };
-
-const firebaseApp=initializeApp(firebaseConfig);
-const auth=initializeAuth(firebaseApp,{
-  persistence:[browserLocalPersistence,browserSessionPersistence],
-  popupRedirectResolver:browserPopupRedirectResolver
-});
-const provider=new GoogleAuthProvider();
+const app=initializeApp(firebaseConfig);
+const auth=initializeAuth(app,{persistence:[browserLocalPersistence,browserSessionPersistence],popupRedirectResolver:browserPopupRedirectResolver});
+const db=getFirestore(app),provider=new GoogleAuthProvider();
 provider.setCustomParameters({prompt:"select_account"});
 
-const login=document.getElementById("login");
-const appView=document.getElementById("app");
-const button=document.getElementById("googleBtn");
-const error=document.getElementById("error");
-const content=document.getElementById("content");
-const avatar=document.getElementById("miniAvatar");
+const login=document.getElementById("login"),appView=document.getElementById("app");
+const content=document.getElementById("content"),miniAvatar=document.getElementById("miniAvatar");
+const loginError=document.getElementById("loginError");
+let currentProfile=null, currentPage="home", signingIn=false;
 
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+const fmtDate=v=>v?.toDate?v.toDate().toLocaleString("es-AR",{dateStyle:"medium",timeStyle:"short"}):"No disponible";
 
-let signingIn=false;
+document.getElementById("googleBtn").onclick=async()=>{
+ if(signingIn)return; signingIn=true; const b=document.getElementById("googleBtn");
+ b.disabled=true;b.textContent="Conectando…";loginError.textContent="";
+ try{await signInWithPopup(auth,provider,browserPopupRedirectResolver)}
+ catch(e){
+  console.error(e);
+  loginError.textContent=e.code==="auth/popup-blocked"?"El navegador bloqueó la ventana de Google. Permití ventanas emergentes.":"No se pudo iniciar sesión: "+(e.code||e.message);
+ }finally{signingIn=false;b.disabled=false;b.textContent="Continuar con Google"}
+};
 
-button.addEventListener("click",async()=>{
-  if(signingIn)return;
-  signingIn=true;button.disabled=true;button.textContent="Conectando…";error.textContent="";
-  try{
-    await signInWithPopup(auth,provider,browserPopupRedirectResolver);
-    // onAuthStateChanged se encarga de mostrar la app.
-  }catch(e){
-    console.error(e);
-    if(e.code==="auth/popup-closed-by-user"){
-      error.textContent="Cerraste la ventana de Google. Podés intentarlo nuevamente.";
-    }else if(e.code==="auth/popup-blocked"){
-      error.textContent="El navegador bloqueó la ventana de Google. Permití ventanas emergentes para este sitio.";
-    }else if(e.code==="auth/unauthorized-domain"){
-      error.textContent="El dominio de NEXORA no está autorizado en Firebase.";
-    }else{
-      error.textContent="No se pudo iniciar sesión: "+(e.code||e.message);
+async function ensureProfile(user){
+ const refUser=doc(db,"users",user.uid);
+ const snap=await getDoc(refUser);
+
+ if(!snap.exists()){
+  const base=(user.displayName||"Nexorian")
+    .trim()
+    .replace(/[^\p{L}\p{N}_.-]/gu,"")
+    .slice(0,18)||"Nexorian";
+
+  let username=base;
+  let n=0;
+
+  while(true){
+   const usernameRef=doc(db,"usernames",username.toLowerCase());
+   const usernameSnap=await getDoc(usernameRef);
+
+   if(!usernameSnap.exists()){
+    try{
+     await runTransaction(db,async tx=>{
+      const existingUser=await tx.get(refUser);
+      const existingUsername=await tx.get(usernameRef);
+
+      if(existingUser.exists()) return;
+      if(existingUsername.exists()) throw new Error("USERNAME_TAKEN");
+
+      tx.set(refUser,{
+       username,
+       usernameLower:username.toLowerCase(),
+       photoURL:user.photoURL||"",
+       email:user.email||"",
+       createdAt:serverTimestamp(),
+       lastConnection:serverTimestamp()
+      });
+
+      tx.create(usernameRef,{
+       uid:user.uid,
+       createdAt:serverTimestamp()
+      });
+     });
+     break;
+    }catch(e){
+     if(e.message==="USERNAME_TAKEN"){
+      n++;
+      username=(base.slice(0,16)+n).slice(0,18);
+      continue;
+     }
+     throw e;
     }
-  }finally{
-    signingIn=false;button.disabled=false;button.textContent="Continuar con Google";
-  }
-});
+   }
 
-onAuthStateChanged(auth,user=>{
-  if(user){
-    login.classList.add("hidden");
-    appView.classList.remove("hidden");
-    if(user.photoURL){avatar.src=user.photoURL;avatar.classList.remove("hidden")}
-    else avatar.classList.add("hidden");
-    render("home");
-  }else{
-    appView.classList.add("hidden");
-    login.classList.remove("hidden");
+   n++;
+   username=(base.slice(0,16)+n).slice(0,18);
   }
+ }else{
+  await updateDoc(refUser,{lastConnection:serverTimestamp()});
+ }
+
+ const fresh=await getDoc(refUser);
+ currentProfile={id:user.uid,...fresh.data()};
+ updateMini();
+}
+function updateMini(){if(currentProfile?.photoURL){miniAvatar.src=currentProfile.photoURL;miniAvatar.classList.remove("hidden")}else miniAvatar.classList.add("hidden")}
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){currentProfile=null;appView.classList.add("hidden");login.classList.remove("hidden");return}
+ try{await ensureProfile(user);login.classList.add("hidden");appView.classList.remove("hidden");render(currentPage)}
+ catch(e){console.error(e);login.classList.add("hidden");appView.classList.remove("hidden");render(currentPage)}
 });
 
 function render(page){
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
-  const user=auth.currentUser;
-  const first=esc(user?.displayName?.split(" ")[0]||"Nexorian");
-  const photo=esc(user?.photoURL||"");
-  const pages={
-    home:`<section class="hero"><h1>Hola, ${first} 👋</h1><p>Bienvenido a tu espacio en NEXORA.</p></section>
-    <div class="grid">
-      <div class="card"><div class="icon">💬</div><b>Chats</b><small>Conectate con otros</small></div>
-      <div class="card"><div class="icon">🌐</div><b>Explorar</b><small>Descubrí contenido</small></div>
-      <div class="card"><div class="icon">👥</div><b>Comunidades</b><small>Encontrá tu lugar</small></div>
-      <div class="card"><div class="icon">🔔</div><b>Alertas</b><small>Tus novedades</small></div>
-    </div>`,
-    explore:`<h2 class="section-title">Explorar</h2><div class="hero"><h1>Descubrí NEXORA</h1><p>El feed y el descubrimiento se conectarán con Firestore.</p></div>`,
-    chats:`<h2 class="section-title">Chats</h2><div class="hero"><h1>Mensajes</h1><p>Acá construiremos tus conversaciones.</p></div>`,
-    alerts:`<h2 class="section-title">Alertas</h2><div class="hero"><h1>Notificaciones</h1><p>Por ahora no tenés novedades.</p></div>`,
-    communities:`<h2 class="section-title">Comunidades</h2><div class="hero"><h1>Tu comunidad</h1><p>El próximo paso será conectarlas con Firestore.</p></div>`,
-    profile:`<h2 class="section-title">Perfil</h2><div class="profile">
-      <img src="${photo}" alt="Foto de perfil"><div><h2>${esc(user?.displayName||"Usuario")}</h2><p>${esc(user?.email||"")}</p></div>
-    </div><button id="logout" class="logout">Cerrar sesión</button>`
-  };
-  content.innerHTML=pages[page]||pages.home;
-  document.getElementById("logout")?.addEventListener("click",async()=>{
-    try{await signOut(auth)}catch(e){console.error(e)}
-  });
+ currentPage=page;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ const p=currentProfile||{}, u=auth.currentUser, first=esc((p.username||"Nexorian").split(" ")[0]);
+ const pages={
+ home:`<section class="hero"><h1>Hola, ${first} 👋</h1><p>Bienvenido a tu espacio en NEXORA.</p></section>
+ <div class="grid"><div class="card">💬<b>Chats</b><small>Conectate con otros</small></div><div class="card">🌐<b>Explorar</b><small>Descubrí contenido</small></div><div class="card">👥<b>Comunidades</b><small>Encontrá tu lugar</small></div><div class="card">🔔<b>Alertas</b><small>Tus novedades</small></div></div>`,
+ explore:`<h2 class="title">Explorar</h2><div class="hero"><h1>Descubrí NEXORA</h1><p>Acá construiremos el contenido público.</p></div>`,
+ chats:`<h2 class="title">Chats</h2><div class="hero"><h1>Mensajes</h1><p>Tu sistema de conversaciones se conectará en el próximo paso.</p></div>`,
+ alerts:`<h2 class="title">Alertas</h2><div class="hero"><h1>Notificaciones</h1><p>Por ahora no tenés novedades.</p></div>`,
+ communities:`<h2 class="title">Comunidades</h2><div class="hero"><h1>Comunidades</h1><p>Próximamente podrás crear y unirte a comunidades.</p></div>`,
+ profile:`<h2 class="title">Mi perfil</h2>
+ <section class="panel"><div class="profile-head"><img id="profilePhoto" src="${esc(p.photoURL||"")}" alt="Foto"><div><h2>${esc(p.username||"Usuario")}</h2><p>Tu perfil de NEXORA</p></div></div>
+ <div class="field"><label>Nombre de usuario</label><input id="username" maxlength="18" value="${esc(p.username||"")}"><div class="notice">Tu nombre de usuario es público. No puede repetirse.</div></div>
+ <div class="field"><label>Foto de perfil</label><div class="notice">Por ahora NEXORA usa la foto de tu cuenta de Google. La subida de fotos propias se podrá activar más adelante con un servicio de almacenamiento.</div></div>
+ <button id="saveProfile" class="primary" style="margin-top:16px">Guardar cambios</button><div id="profileMsg" class="notice hidden"></div>
+ <div class="info"><div><b>Correo electrónico</b><span>${esc(u?.email||"")}</span></div><div><b>Fecha de registro</b><span>${esc(fmtDate(p.createdAt))}</span></div><div><b>Última conexión</b><span>${esc(fmtDate(p.lastConnection))}</span></div></div>
+ <div class="notice">🔒 El correo, la fecha de registro y la última conexión son datos privados y no se muestran a otros usuarios.</div>
+ <button id="logout" class="logout" style="margin-top:14px">Cerrar sesión</button></section>`
+ };
+ content.innerHTML=pages[page]||pages.home;
+ document.getElementById("logout")?.addEventListener("click",()=>signOut(auth));
+ document.getElementById("saveProfile")?.addEventListener("click",saveProfile);
 }
 
+async function saveProfile(){
+ const input=document.getElementById("username");
+ const msg=document.getElementById("profileMsg");
+ const btn=document.getElementById("saveProfile");
+
+ let username=input.value.trim().replace(/\s+/g," ");
+
+ if(username.length<3||username.length>18){
+  msg.textContent="El nombre debe tener entre 3 y 18 caracteres.";
+  msg.classList.remove("hidden");
+  return;
+ }
+
+ if(!/^[\p{L}\p{N}_.-]+$/u.test(username)){
+  msg.textContent="Usá solo letras, números, punto, guion o guion bajo.";
+  msg.classList.remove("hidden");
+  return;
+ }
+
+ btn.disabled=true;
+ msg.classList.remove("hidden");
+ msg.textContent="Guardando…";
+
+ try{
+  const user=auth.currentUser;
+  if(!user) throw new Error("NO_AUTH");
+
+  const userRef=doc(db,"users",user.uid);
+  const lower=username.toLowerCase();
+  const oldLower=(currentProfile?.usernameLower||"").toLowerCase();
+
+  await runTransaction(db,async tx=>{
+   const userSnap=await tx.get(userRef);
+   if(!userSnap.exists()) throw new Error("PROFILE_MISSING");
+
+   const newUsernameRef=doc(db,"usernames",lower);
+   const newUsernameSnap=await tx.get(newUsernameRef);
+
+   if(newUsernameSnap.exists() && newUsernameSnap.data().uid!==user.uid){
+    throw new Error("USERNAME_TAKEN");
+   }
+
+   if(lower!==oldLower){
+    tx.create(newUsernameRef,{
+     uid:user.uid,
+     createdAt:serverTimestamp()
+    });
+
+    if(oldLower){
+     const oldUsernameRef=doc(db,"usernames",oldLower);
+     const oldUsernameSnap=await tx.get(oldUsernameRef);
+     if(oldUsernameSnap.exists() && oldUsernameSnap.data().uid===user.uid){
+      tx.delete(oldUsernameRef);
+     }
+    }
+   }
+
+   tx.update(userRef,{
+    username,
+    usernameLower:lower
+   });
+  });
+
+  await ensureProfile(user);
+  render("profile");
+
+  const newMsg=document.getElementById("profileMsg");
+  newMsg.classList.remove("hidden");
+  newMsg.textContent="✓ Perfil actualizado.";
+ }catch(e){
+  console.error(e);
+  msg.classList.remove("hidden");
+
+  if(e.message==="USERNAME_TAKEN"){
+   msg.textContent="Ese nombre de usuario ya está ocupado.";
+  }else if(e.message==="NO_AUTH"){
+   msg.textContent="Tu sesión expiró. Volvé a iniciar sesión.";
+  }else if(e.message==="PROFILE_MISSING"){
+   msg.textContent="No se encontró tu perfil. Volvé a iniciar sesión.";
+  }else{
+   msg.textContent="No se pudieron guardar los cambios: "+(e.code||e.message);
+  }
+ }finally{
+  btn.disabled=false;
+ }
+}
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>render(b.dataset.page)));
 </script>
 </body>
