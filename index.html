@@ -1,42 +1,26 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#09090f">
-  <title>NEXORA</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;background:#09090f;color:#f5f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-    button{font:inherit}
-    .app{min-height:100vh;max-width:720px;margin:auto;padding-bottom:82px}
-    header{padding:22px 20px 12px;display:flex;align-items:center;justify-content:space-between}
-    .logo{font-size:28px;font-weight:900;letter-spacing:.5px}
-    .logo span{opacity:.65}
-    .user-mini{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#20202b;display:none}
-    main{padding:8px 16px}
-    .hero{padding:28px 20px;border:1px solid #242432;border-radius:24px;background:linear-gradient(145deg,#151521,#0e0e16)}
-    .hero h1{margin:0 0 8px;font-size:34px}
-    .hero p{margin:0;color:#aaaabb}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-    .card{border:1px solid #242432;background:#12121b;border-radius:18px;padding:18px;min-height:105px}
-    .icon{font-size:25px}.card b{display:block;margin-top:10px}.card small{color:#9292a5}
-    .login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
-    .login-box{width:100%;max-width:430px;text-align:center;padding:34px 24px;border:1px solid #292936;border-radius:28px;background:#11111a}
-    .login-box h1{font-size:42px;margin:0 0 8px}
-    .login-box p{color:#9999aa;margin:0 0 28px}
-    .google{width:100%;border:0;border-radius:14px;padding:15px;background:#fff;color:#111;font-weight:700;cursor:pointer}
-    .error{color:#ff7d7d;font-size:13px;margin-top:14px}
-    .profile{display:flex;gap:16px;align-items:center;padding:22px;border:1px solid #292936;border-radius:22px;background:#12121b}
-    .profile img{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#222}
-    .profile h2{margin:0 0 5px}.profile p{margin:0;color:#9999aa;word-break:break-word}
-    .logout{margin-top:18px;width:100%;padding:13px;border:1px solid #393946;border-radius:13px;background:#181821;color:#fff;cursor:pointer}
-    nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:720px;height:72px;background:rgba(12,12,18,.96);border-top:1px solid #292936;display:flex;justify-content:space-around;align-items:center;z-index:5}
-    nav button{background:none;border:0;color:#777789;font-size:11px;display:flex;flex-direction:column;gap:4px;align-items:center;cursor:pointer}
-    nav button.active{color:#fff} nav span{font-size:21px}
-    .section-title{font-size:24px;margin:12px 4px 18px}
-    .hidden{display:none!important}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#09090f">
+<title>NEXORA</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#09090f;color:#f5f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button{font:inherit}.hidden{display:none!important}.app{min-height:100vh;max-width:720px;margin:auto;padding-bottom:84px}
+header{padding:22px 20px 12px;display:flex;align-items:center;justify-content:space-between}.logo{font-size:28px;font-weight:900;letter-spacing:.5px}.logo span{opacity:.6}
+.user-mini{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#20202b}
+main{padding:8px 16px}.hero{padding:28px 20px;border:1px solid #242432;border-radius:24px;background:linear-gradient(145deg,#151521,#0e0e16)}
+.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#aaaabb}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.card{border:1px solid #242432;background:#12121b;border-radius:18px;padding:18px;min-height:105px}.icon{font-size:25px}.card b{display:block;margin-top:10px}.card small{color:#9292a5}
+.login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}.login-box{width:100%;max-width:430px;text-align:center;padding:34px 24px;border:1px solid #292936;border-radius:28px;background:#11111a}
+.login-box h1{font-size:42px;margin:0 0 8px}.login-box p{color:#9999aa;margin:0 0 28px}.google{width:100%;border:0;border-radius:14px;padding:15px;background:#fff;color:#111;font-weight:700;cursor:pointer}
+.google:disabled{opacity:.65;cursor:wait}.error{color:#ff7d7d;font-size:13px;margin-top:14px;line-height:1.45}
+.profile{display:flex;gap:16px;align-items:center;padding:22px;border:1px solid #292936;border-radius:22px;background:#12121b}.profile img{width:72px;height:72px;border-radius:50%;object-fit:cover;background:#222}
+.profile h2{margin:0 0 5px}.profile p{margin:0;color:#9999aa;word-break:break-word}.logout{margin-top:18px;width:100%;padding:13px;border:1px solid #393946;border-radius:13px;background:#181821;color:#fff;cursor:pointer}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:720px;height:72px;background:rgba(12,12,18,.97);border-top:1px solid #292936;display:flex;justify-content:space-around;align-items:center;z-index:5;overflow-x:auto}
+nav button{background:none;border:0;color:#777789;font-size:10px;min-width:58px;display:flex;flex-direction:column;gap:4px;align-items:center;cursor:pointer}nav button.active{color:#fff}nav span{font-size:20px}.section-title{font-size:24px;margin:12px 4px 18px}
+</style>
 </head>
 <body>
 <div id="login" class="login">
@@ -49,10 +33,7 @@
 </div>
 
 <div id="app" class="app hidden">
-  <header>
-    <div class="logo">NEXORA<span>.</span></div>
-    <img id="miniAvatar" class="user-mini" alt="Perfil">
-  </header>
+  <header><div class="logo">NEXORA<span>.</span></div><img id="miniAvatar" class="user-mini" alt="Perfil"></header>
   <main id="content"></main>
   <nav>
     <button data-page="home" class="active"><span>⌂</span>Inicio</button>
@@ -65,105 +46,104 @@
 </div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-  import {
-    getAuth,
-    GoogleAuthProvider,
-    signInWithRedirect,
-    getRedirectResult,
-    onAuthStateChanged,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  initializeAuth,browserLocalPersistence,browserSessionPersistence,
+  browserPopupRedirectResolver,GoogleAuthProvider,signInWithPopup,
+  onAuthStateChanged,signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
-    authDomain: "nexora-95988.firebaseapp.com",
-    projectId: "nexora-95988",
-    storageBucket: "nexora-95988.firebasestorage.app",
-    messagingSenderId: "799958541592",
-    appId: "1:799958541592:web:bb938420b4460ab8916a6d"
-  };
+const firebaseConfig={
+  apiKey:"AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
+  authDomain:"nexora-95988.firebaseapp.com",
+  projectId:"nexora-95988",
+  storageBucket:"nexora-95988.firebasestorage.app",
+  messagingSenderId:"799958541592",
+  appId:"1:799958541592:web:bb938420b4460ab8916a6d"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+const firebaseApp=initializeApp(firebaseConfig);
+const auth=initializeAuth(firebaseApp,{
+  persistence:[browserLocalPersistence,browserSessionPersistence],
+  popupRedirectResolver:browserPopupRedirectResolver
+});
+const provider=new GoogleAuthProvider();
+provider.setCustomParameters({prompt:"select_account"});
 
-  const login = document.getElementById("login");
-  const appView = document.getElementById("app");
-  const error = document.getElementById("error");
-  const content = document.getElementById("content");
-  const miniAvatar = document.getElementById("miniAvatar");
+const login=document.getElementById("login");
+const appView=document.getElementById("app");
+const button=document.getElementById("googleBtn");
+const error=document.getElementById("error");
+const content=document.getElementById("content");
+const avatar=document.getElementById("miniAvatar");
 
-  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[c]));
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 
-  document.getElementById("googleBtn").addEventListener("click", async () => {
-    error.textContent = "";
-    try {
-      await signInWithRedirect(auth, provider);
-    } catch (e) {
-      error.textContent = "No se pudo iniciar sesión: " + (e.code || e.message);
-    }
-  });
+let signingIn=false;
 
-  // Consume el resultado de la redirección sin crear otro login ni otro redirect.
-  getRedirectResult(auth).catch(e => {
+button.addEventListener("click",async()=>{
+  if(signingIn)return;
+  signingIn=true;button.disabled=true;button.textContent="Conectando…";error.textContent="";
+  try{
+    await signInWithPopup(auth,provider,browserPopupRedirectResolver);
+    // onAuthStateChanged se encarga de mostrar la app.
+  }catch(e){
     console.error(e);
-    error.textContent = "No se pudo completar Google Login: " + (e.code || e.message);
-  });
-
-  // Única fuente de verdad para saber si hay sesión.
-  onAuthStateChanged(auth, user => {
-    if (user) {
-      login.classList.add("hidden");
-      appView.classList.remove("hidden");
-      miniAvatar.src = user.photoURL || "";
-      miniAvatar.style.display = user.photoURL ? "block" : "none";
-      render("home");
-    } else {
-      appView.classList.add("hidden");
-      login.classList.remove("hidden");
-      miniAvatar.style.display = "none";
+    if(e.code==="auth/popup-closed-by-user"){
+      error.textContent="Cerraste la ventana de Google. Podés intentarlo nuevamente.";
+    }else if(e.code==="auth/popup-blocked"){
+      error.textContent="El navegador bloqueó la ventana de Google. Permití ventanas emergentes para este sitio.";
+    }else if(e.code==="auth/unauthorized-domain"){
+      error.textContent="El dominio de NEXORA no está autorizado en Firebase.";
+    }else{
+      error.textContent="No se pudo iniciar sesión: "+(e.code||e.message);
     }
-  });
-
-  function render(page) {
-    document.querySelectorAll("nav button").forEach(b =>
-      b.classList.toggle("active", b.dataset.page === page)
-    );
-    const user = auth.currentUser;
-
-    const pages = {
-      home: `
-        <section class="hero">
-          <h1>Hola, ${esc(user?.displayName?.split(" ")[0] || "Nexorian")} 👋</h1>
-          <p>Bienvenido a tu espacio en NEXORA.</p>
-        </section>
-        <div class="grid">
-          <div class="card"><div class="icon">💬</div><b>Chats</b><small>Conectate con otros</small></div>
-          <div class="card"><div class="icon">🌐</div><b>Explorar</b><small>Descubrí contenido</small></div>
-          <div class="card"><div class="icon">👥</div><b>Comunidades</b><small>Encontrá tu lugar</small></div>
-          <div class="card"><div class="icon">🔔</div><b>Alertas</b><small>Tus novedades</small></div>
-        </div>`,
-      explore:`<h2 class="section-title">Explorar</h2><div class="hero"><h1>Descubrí NEXORA</h1><p>Acá construiremos el feed y el sistema de descubrimiento.</p></div>`,
-      chats:`<h2 class="section-title">Chats</h2><div class="hero"><h1>Mensajes</h1><p>Tu sistema de conversaciones estará acá.</p></div>`,
-      alerts:`<h2 class="section-title">Alertas</h2><div class="hero"><h1>Notificaciones</h1><p>Por ahora no tenés novedades.</p></div>`,
-      communities:`<h2 class="section-title">Comunidades</h2><div class="hero"><h1>Tu comunidad</h1><p>El siguiente paso será conectar esto con Firestore.</p></div>`,
-      profile:`<h2 class="section-title">Perfil</h2>
-        <div class="profile">
-          <img src="${esc(user?.photoURL || "")}" alt="">
-          <div><h2>${esc(user?.displayName || "Usuario")}</h2><p>${esc(user?.email || "")}</p></div>
-        </div>
-        <button id="logout" class="logout">Cerrar sesión</button>`
-    };
-    content.innerHTML = pages[page] || pages.home;
-    document.getElementById("logout")?.addEventListener("click", () => signOut(auth));
+  }finally{
+    signingIn=false;button.disabled=false;button.textContent="Continuar con Google";
   }
+});
 
-  document.querySelectorAll("nav button").forEach(b =>
-    b.addEventListener("click", () => render(b.dataset.page))
-  );
+onAuthStateChanged(auth,user=>{
+  if(user){
+    login.classList.add("hidden");
+    appView.classList.remove("hidden");
+    if(user.photoURL){avatar.src=user.photoURL;avatar.classList.remove("hidden")}
+    else avatar.classList.add("hidden");
+    render("home");
+  }else{
+    appView.classList.add("hidden");
+    login.classList.remove("hidden");
+  }
+});
+
+function render(page){
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  const user=auth.currentUser;
+  const first=esc(user?.displayName?.split(" ")[0]||"Nexorian");
+  const photo=esc(user?.photoURL||"");
+  const pages={
+    home:`<section class="hero"><h1>Hola, ${first} 👋</h1><p>Bienvenido a tu espacio en NEXORA.</p></section>
+    <div class="grid">
+      <div class="card"><div class="icon">💬</div><b>Chats</b><small>Conectate con otros</small></div>
+      <div class="card"><div class="icon">🌐</div><b>Explorar</b><small>Descubrí contenido</small></div>
+      <div class="card"><div class="icon">👥</div><b>Comunidades</b><small>Encontrá tu lugar</small></div>
+      <div class="card"><div class="icon">🔔</div><b>Alertas</b><small>Tus novedades</small></div>
+    </div>`,
+    explore:`<h2 class="section-title">Explorar</h2><div class="hero"><h1>Descubrí NEXORA</h1><p>El feed y el descubrimiento se conectarán con Firestore.</p></div>`,
+    chats:`<h2 class="section-title">Chats</h2><div class="hero"><h1>Mensajes</h1><p>Acá construiremos tus conversaciones.</p></div>`,
+    alerts:`<h2 class="section-title">Alertas</h2><div class="hero"><h1>Notificaciones</h1><p>Por ahora no tenés novedades.</p></div>`,
+    communities:`<h2 class="section-title">Comunidades</h2><div class="hero"><h1>Tu comunidad</h1><p>El próximo paso será conectarlas con Firestore.</p></div>`,
+    profile:`<h2 class="section-title">Perfil</h2><div class="profile">
+      <img src="${photo}" alt="Foto de perfil"><div><h2>${esc(user?.displayName||"Usuario")}</h2><p>${esc(user?.email||"")}</p></div>
+    </div><button id="logout" class="logout">Cerrar sesión</button>`
+  };
+  content.innerHTML=pages[page]||pages.home;
+  document.getElementById("logout")?.addEventListener("click",async()=>{
+    try{await signOut(auth)}catch(e){console.error(e)}
+  });
+}
+
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>render(b.dataset.page)));
 </script>
 </body>
 </html>
