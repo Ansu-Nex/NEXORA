@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080910">
+  <meta name="description" content="NEXORA — conecta, descubre y comparte.">
+  <title>NEXORA — Red social</title>
+  <style>
+    :root{
+      --bg:#080910;--surface:#11131d;--surface2:#171925;--surface3:#1d2030;
+      --text:#f5f7ff;--muted:#9298ad;--line:rgba(255,255,255,.08);
+      --primary:#8b5cf6;--primary2:#a855f7;--cyan:#22d3ee;--danger:#fb7185;
+      --success:#34d399;--shadow:0 18px 50px rgba(0,0,0,.35);--radius:22px;--nav:78px;
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0%,rgba(139,92,246,.17),transparent 28rem),radial-gradient(circle at 90% 15%,rgba(34,211,238,.08),transparent 25rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer}
+    .hidden{display:none!important}.app{width:min(100%,1180px);margin:auto;min-height:100vh;padding-bottom:calc(var(--nav) + 22px)}
+    .topbar{position:sticky;top:0;z-index:20;height:70px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,9,16,.84);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.08em;font-size:1.18rem}.logo{width:35px;height:35px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--cyan));display:grid;place-items:center;box-shadow:0 8px 25px rgba(139,92,246,.3)}.logo:before{content:"N";font-weight:950;color:white}
+    .top-actions{display:flex;align-items:center;gap:8px}.icon-btn{border:1px solid var(--line);background:var(--surface);color:var(--text);width:42px;height:42px;border-radius:14px;display:grid;place-items:center;transition:.2s}.icon-btn:hover{transform:translateY(-2px);background:var(--surface2)}
+    .mini-avatar{width:40px;height:40px;border-radius:14px;object-fit:cover;border:1px solid var(--line);background:linear-gradient(135deg,var(--primary),var(--cyan))}.mini-fallback{display:grid;place-items:center;font-weight:900;color:#fff}
+    main{padding:20px 14px}.view{display:none;animation:fade .35s ease}.view.active{display:block}@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+    .hero{position:relative;overflow:hidden;padding:26px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(17,19,29,.94) 55%);box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(34,211,238,.08);right:-70px;top:-80px}
+    .eyebrow{color:#c4b5fd;font-size:.76rem;font-weight:800;text-transform:uppercase;letter-spacing:.13em}h1{font-size:clamp(2rem,9vw,3.4rem);line-height:1;margin:10px 0}h2{margin:0 0 14px;font-size:1.3rem}.sub{color:var(--muted);line-height:1.55}.hero-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+    .btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;transition:.2s}.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;box-shadow:0 8px 25px rgba(139,92,246,.25)}.btn.secondary{background:var(--surface2);border:1px solid var(--line);color:var(--text)}.btn.google{background:#fff;color:#202124;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 16px}.btn.google:hover{transform:translateY(-2px)}.btn:hover{transform:translateY(-2px)}
+    .google-icon{width:20px;height:20px}.section{margin-top:24px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.section-head span{color:var(--muted);font-size:.84rem}
+    .feed{display:grid;gap:13px}.card{background:rgba(17,19,29,.88);border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:0 12px 35px rgba(0,0,0,.16)}
+    .post-head{display:flex;gap:11px;align-items:center}.avatar{width:43px;height:43px;border-radius:15px;display:grid;place-items:center;font-weight:900;color:white;background:linear-gradient(135deg,#7c3aed,#06b6d4);flex:none;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.avatar.green{background:linear-gradient(135deg,#059669,#22c55e)}.avatar.pink{background:linear-gradient(135deg,#db2777,#f97316)}.user{font-weight:800}.handle{color:var(--muted);font-size:.78rem}.post-text{line-height:1.6;color:#e7e9f4;margin:14px 0}.post-actions{display:flex;gap:7px}.action{border:0;background:transparent;color:var(--muted);padding:8px 10px;border-radius:10px}.action:hover{background:var(--surface2);color:var(--text)}.action.liked{color:var(--danger)}
+    .discover-grid{display:grid;gap:13px}.community{display:flex;align-items:center;gap:13px}.community-info{flex:1}.community-info b{display:block}.community-info small{display:block;color:var(--muted)}.search{display:flex;gap:10px;margin-bottom:17px}.search input{flex:1;background:var(--surface);border:1px solid var(--line);color:var(--text);outline:none;border-radius:15px;padding:13px 15px}.search input:focus{border-color:rgba(139,92,246,.65)}
+    .tabs{display:flex;gap:8px;overflow:auto;padding-bottom:4px}.tab{white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:99px;padding:9px 13px}.tab.active{background:rgba(139,92,246,.17);color:#ddd6fe;border-color:rgba(139,92,246,.4)}
+    .chat-list{display:grid;gap:7px}.chat{display:flex;gap:12px;align-items:center;padding:13px;border-radius:17px;border:1px solid transparent}.chat:hover{background:var(--surface);border-color:var(--line)}.chat-main{flex:1}.chat-main b{display:block}.chat-main span{display:block;color:var(--muted);font-size:.84rem;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.online{width:9px;height:9px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(52,211,153,.1)}
+    .notification{display:flex;gap:12px;padding:15px 0;border-bottom:1px solid var(--line)}.notification:last-child{border:0}.notification p{margin:0;line-height:1.45}.notification small{color:var(--muted)}
+    .profile-cover{height:145px;border-radius:26px;background:linear-gradient(125deg,#241052,#162c4e,#073c48);border:1px solid var(--line)}.profile-card{margin-top:-43px;padding:0 18px}.profile-avatar{width:86px;height:86px;border-radius:27px;border:5px solid var(--bg);display:grid;place-items:center;background:linear-gradient(135deg,var(--primary),var(--cyan));font-size:1.8rem;font-weight:900;overflow:hidden}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-row{display:flex;align-items:center;justify-content:space-between;gap:15px}.stats{display:flex;gap:25px;margin:20px 0}.stats b{display:block;font-size:1.1rem}.stats span{font-size:.76rem;color:var(--muted)}
+    .bottom-nav{position:fixed;z-index:30;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,760px);height:var(--nav);padding:8px max(10px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-bottom));background:rgba(12,13,22,.94);backdrop-filter:blur(22px);border:1px solid var(--line);border-bottom:0;border-radius:22px 22px 0 0;display:grid;grid-template-columns:repeat(6,1fr);gap:3px;box-shadow:0 -12px 40px rgba(0,0,0,.25)}.nav-item{border:0;background:transparent;color:var(--muted);border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:.67rem;font-weight:700;position:relative}.nav-icon{font-size:1.2rem}.nav-item.active{color:#c4b5fd;background:rgba(139,92,246,.12)}.badge{position:absolute;top:6px;margin-left:22px;background:var(--danger);color:white;border-radius:99px;min-width:16px;height:16px;font-size:.62rem;display:grid;place-items:center;padding:0 4px}
+    .toast{position:fixed;z-index:80;left:50%;bottom:92px;transform:translate(-50%,15px);background:#fff;color:#0a0b10;padding:11px 15px;border-radius:13px;font-weight:750;opacity:0;pointer-events:none;transition:.25s;box-shadow:var(--shadow);max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .auth-gate{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 0%,rgba(139,92,246,.2),transparent 30rem),radial-gradient(circle at 90% 20%,rgba(34,211,238,.1),transparent 25rem),#07080e}.auth-card{width:min(100%,430px);padding:30px 24px;border:1px solid var(--line);border-radius:30px;background:rgba(17,19,29,.94);box-shadow:var(--shadow);text-align:center}.auth-logo{width:64px;height:64px;border-radius:21px;margin:0 auto 18px;background:linear-gradient(135deg,var(--primary),var(--cyan));display:grid;place-items:center;font-size:1.8rem;font-weight:950;box-shadow:0 15px 35px rgba(139,92,246,.25)}.auth-card h1{font-size:2.4rem;margin:0 0 8px}.auth-card p{color:var(--muted);line-height:1.55;margin:0 0 22px}.auth-note{font-size:.74rem;color:var(--muted);margin-top:15px}.loading{display:inline-block;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-4px;margin-right:8px}@keyframes spin{to{transform:rotate(360deg)}}
+    .user-menu{position:fixed;z-index:70;right:14px;top:66px;width:230px;background:var(--surface2);border:1px solid var(--line);border-radius:18px;padding:10px;box-shadow:var(--shadow)}.user-menu .menu-user{padding:10px 8px;border-bottom:1px solid var(--line);margin-bottom:6px}.user-menu .menu-user b{display:block}.user-menu .menu-user span{color:var(--muted);font-size:.76rem;word-break:break-word}.user-menu button{width:100%;border:0;background:transparent;color:var(--text);text-align:left;padding:11px;border-radius:11px}.user-menu button:hover{background:var(--surface3)}
+    @media(min-width:700px){.app{padding-bottom:30px}.topbar{margin:0 12px;border-radius:0 0 20px 20px}.bottom-nav{position:sticky;top:10px;bottom:auto;transform:none;left:auto;margin:15px auto 0;border:1px solid var(--line);border-radius:20px;width:min(96%,700px);height:66px}main{padding:25px 22px}.discover-grid{grid-template-columns:1fr 1fr}.feed{max-width:760px;margin:auto}.hero{padding:34px}.profile-cover{height:190px}}
+  </style>
+</head>
+<body>
+  <div id="authGate" class="auth-gate">
+    <div class="auth-card">
+      <div class="auth-logo">N</div>
+      <h1>NEXORA</h1>
+      <p>Tu espacio para conectar, descubrir personas, comunidades e ideas.</p>
+      <button id="googleBtn" class="btn google">
+        <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.35 12.23c0-.72-.06-1.41-.18-2.07H12v3.91h5.23a4.47 4.47 0 0 1-1.94 2.93v2.43h3.14c1.84-1.69 2.92-4.18 2.92-7.2Z"/><path fill="#34A853" d="M12 21.75c2.63 0 4.84-.87 6.45-2.35l-3.14-2.43c-.87.58-1.98.93-3.31.93-2.54 0-4.69-1.72-5.46-4.03H3.3v2.5A9.75 9.75 0 0 0 12 21.75Z"/><path fill="#FBBC05" d="M6.54 13.87A5.86 5.86 0 0 1 6.23 12c0-.65.11-1.28.31-1.87v-2.5H3.3A9.75 9.75 0 0 0 2.25 12c0 1.57.38 3.06 1.05 4.37l3.24-2.5Z"/><path fill="#EA4335" d="M12 6.1c1.43 0 2.71.49 3.72 1.46l2.79-2.79C16.84 3.1 14.63 2.25 12 2.25A9.75 9.75 0 0 0 3.3 7.63l3.24 2.5C7.31 7.82 9.46 6.1 12 6.1Z"/></svg>
+        Continuar con Google
+      </button>
+      <div id="authStatus" class="auth-note">Iniciá sesión para entrar a NEXORA.</div>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="brand"><div class="logo"></div>NEXORA</div>
+      <div class="top-actions">
+        <button class="icon-btn" id="quickNotify" aria-label="Notificaciones">🔔</button>
+        <button class="icon-btn" id="userMenuBtn" aria-label="Perfil"><span id="topAvatar" class="mini-avatar mini-fallback">N</span></button>
+      </div>
+    </header>
+
+    <div id="userMenu" class="user-menu hidden">
+      <div class="menu-user"><b id="menuName">Usuario</b><span id="menuEmail">correo</span></div>
+      <button onclick="showView('profile');toggleMenu(false)">👤 Mi perfil</button>
+      <button onclick="logout()">↪ Cerrar sesión</button>
+    </div>
+
+    <main>
+      <section class="view active" id="home">
+        <div class="hero"><div class="eyebrow">Tu espacio digital</div><h1>Conectá con<br>tu NEXORA.</h1><p class="sub">Descubrí personas, comunidades e ideas que hacen que cada conexión tenga sentido.</p><div class="hero-actions"><button class="btn primary" onclick="showView('explore')">Explorar ahora</button><button class="btn secondary" onclick="createPost()">＋ Crear publicación</button></div></div>
+        <div class="section"><div class="section-head"><h2>Para vos</h2><span>Actualizado ahora</span></div><div class="feed" id="feed"></div></div>
+      </section>
+
+      <section class="view" id="explore"><div class="section-head"><h2>Explorar</h2><span>Descubrí algo nuevo</span></div><div class="search"><input id="searchInput" type="search" placeholder="Buscar personas, temas o comunidades..." oninput="filterExplore()"><button class="icon-btn">⌕</button></div><div class="tabs"><button class="tab active">Tendencias</button><button class="tab">Personas</button><button class="tab">Comunidades</button></div><div class="section"><div class="discover-grid" id="discover"></div></div></section>
+      <section class="view" id="chats"><div class="section-head"><h2>Chats</h2><button class="icon-btn" onclick="toast('Los chats reales serán el próximo módulo 💬')">＋</button></div><div class="chat-list" id="chatList"></div></section>
+      <section class="view" id="notifications"><div class="section-head"><h2>Notificaciones</h2><button class="btn secondary" onclick="toast('Notificaciones marcadas como leídas')">Marcar leídas</button></div><div class="card" id="notificationsList"></div></section>
+      <section class="view" id="communities"><div class="section-head"><h2>Comunidades</h2><span>Encontrá tu lugar</span></div><div class="discover-grid" id="communityList"></div></section>
+      <section class="view" id="profile"><div class="profile-cover"></div><div class="profile-card"><div class="profile-row"><div id="profileAvatar" class="profile-avatar">N</div><button class="btn secondary" onclick="toast('El editor de perfil llegará con Firestore ✨')">Editar perfil</button></div><div style="margin-top:12px"><h2 id="profileName" style="margin:0">Tu perfil</h2><div id="profileHandle" class="handle">@nexora_user</div></div><p id="profileBio" class="sub">Construyendo conexiones, compartiendo ideas y explorando NEXORA.</p><div class="stats"><div><b>0</b><span>Siguiendo</span></div><div><b>0</b><span>Seguidores</span></div><div><b>0</b><span>Posts</span></div></div><div class="card"><b>Cuenta conectada</b><p id="profileEmail" class="sub" style="margin-bottom:0">Tu cuenta de Google está protegida por Firebase Authentication.</p></div></div></section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>Inicio</button>
+      <button class="nav-item" data-view="explore"><span class="nav-icon">⌕</span>Explorar</button>
+      <button class="nav-item" data-view="chats"><span class="nav-icon">◌</span>Chats</button>
+      <button class="nav-item" data-view="notifications"><span class="nav-icon">♢</span><i class="badge">3</i>Alertas</button>
+      <button class="nav-item" data-view="communities"><span class="nav-icon">♧</span>Comunidades</button>
+      <button class="nav-item" data-view="profile"><span class="nav-icon">◎</span>Perfil</button>
+    </nav>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
+      authDomain: "nexora-95988.firebaseapp.com",
+      projectId: "nexora-95988",
+      storageBucket: "nexora-95988.firebasestorage.app",
+      messagingSenderId: "799958541592",
+      appId: "1:799958541592:web:bb938420b4460ab8916a6d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: "select_account" });
+
+    const $ = id => document.getElementById(id);
+    const authGate = $("authGate"), appEl = $("app"), googleBtn = $("googleBtn"), authStatus = $("authStatus");
+
+    googleBtn.addEventListener("click", async () => {
+      googleBtn.disabled = true;
+      googleBtn.innerHTML = '<span class="loading"></span>Conectando con Google…';
+      authStatus.textContent = "Abriendo Google…";
+      try {
+        // En móvil usamos redirect; en escritorio popup suele ser más cómodo.
+        const mobile = window.matchMedia("(pointer:coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        if (mobile) await signInWithRedirect(auth, provider);
+        else await signInWithPopup(auth, provider);
+      } catch (error) {
+        console.error(error);
+        googleBtn.disabled = false;
+        googleBtn.innerHTML = 'Continuar con Google';
+        authStatus.textContent = friendlyAuthError(error);
+      }
+    });
+
+    try { await getRedirectResult(auth); } catch (error) { authStatus.textContent = friendlyAuthError(error); }
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        authGate.classList.add("hidden");
+        appEl.classList.remove("hidden");
+        renderUser(user);
+        renderAll();
+      } else {
+        appEl.classList.add("hidden");
+        authGate.classList.remove("hidden");
+        googleBtn.disabled = false;
+        googleBtn.innerHTML = 'Continuar con Google';
+        authStatus.textContent = "Iniciá sesión para entrar a NEXORA.";
+      }
+    });
+
+    window.logout = async () => { try { await signOut(auth); toast("Sesión cerrada"); } catch(e) { toast("No se pudo cerrar la sesión"); } };
+    window.showView = showView; window.toast = toast; window.createPost = createPost; window.filterExplore = filterExplore; window.follow = follow; window.join = join; window.likePost = likePost; window.toggleMenu = toggleMenu;
+
+    function renderUser(user){
+      const name = user.displayName || "Usuario NEXORA";
+      const email = user.email || "";
+      const photo = user.photoURL;
+      $("menuName").textContent = name; $("menuEmail").textContent = email;
+      $("profileName").textContent = name; $("profileEmail").textContent = email || "Cuenta conectada con Google";
+      const handle = "@" + (name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"").slice(0,20) || "nexora_user");
+      $("profileHandle").textContent = handle;
+      setAvatar($("topAvatar"), photo, name);
+      setAvatar($("profileAvatar"), photo, name);
+    }
+    function setAvatar(el, photo, name){ if(photo){ el.innerHTML = `<img src="${escapeHtml(photo)}" alt="Foto de perfil">`; } else { el.textContent=(name||"N").trim().charAt(0).toUpperCase(); el.classList.add("mini-fallback"); } }
+    function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));}
+    function friendlyAuthError(error){
+      const code = error?.code || "";
+      if(code.includes("popup-closed")) return "Cerraste la ventana de Google. Intentá nuevamente.";
+      if(code.includes("unauthorized-domain")) return "Este dominio todavía no está autorizado en Firebase. Agregá tu dominio de GitHub Pages en Authentication → Settings → Authorized domains.";
+      if(code.includes("popup-blocked")) return "El navegador bloqueó la ventana de Google. Probá nuevamente o permití ventanas emergentes.";
+      if(code.includes("network-request-failed")) return "Revisá tu conexión a Internet e intentá nuevamente.";
+      return "No pudimos iniciar sesión con Google. Revisá la configuración de Firebase.";
+    }
+
+    const posts=[
+      {name:"Sofía",handle:"@sofia.dev",time:"hace 8 min",avatar:"S",text:"La mejor parte de una comunidad digital no es la cantidad de gente, sino encontrar personas con las que realmente conectás.",likes:42,comments:8},
+      {name:"Mateo",handle:"@mateo",time:"hace 26 min",avatar:"M",cls:"green",text:"Estoy armando algo nuevo para NEXORA. Se vienen muchas novedades. 🚀 ¿Qué funcionalidad te gustaría ver primero?",likes:87,comments:21},
+      {name:"Valentina",handle:"@vale.art",time:"hace 1 h",avatar:"V",cls:"pink",text:"Compartir ideas, descubrir perspectivas y crear juntos. Esa es la energía que quiero encontrar acá. ✨",likes:126,comments:14}
+    ];
+    const people=[{name:"Sofía Dev",tag:"@sofia.dev",desc:"Tecnología · Diseño",avatar:"S"},{name:"Mateo",tag:"@mateo",desc:"Construyendo productos",avatar:"M",cls:"green"},{name:"Valentina Art",tag:"@vale.art",desc:"Arte · Creatividad",avatar:"V",cls:"pink"},{name:"Nico",tag:"@nico.codes",desc:"Código · IA",avatar:"N"}];
+    const communities=[{name:"NEXORA Creators",desc:"Creadores y proyectos digitales",members:"12.4K miembros",avatar:"✦"},{name:"Tecnología & IA",desc:"Ideas, herramientas y futuro",members:"8.7K miembros",avatar:"⌘",cls:"green"},{name:"Diseño Digital",desc:"UI, UX, branding y creatividad",members:"5.2K miembros",avatar:"◈",cls:"pink"},{name:"Gaming Hub",desc:"Juegos, noticias y comunidad",members:"18.1K miembros",avatar:"◉"}];
+    const chats=[["Sofía","¿Viste el nuevo diseño? 👀","S","Hace 2 min",""],["Mateo","Te mandé la propuesta de NEXORA 🚀","M","Hace 18 min","green"],["Valentina","Me encanta cómo está quedando ✨","V","Ayer","pink"],["NEXORA Team","Bienvenido a la comunidad.","N","Lun",""]];
+
+    function renderAll(){renderFeed();renderDiscover();renderCommunities();renderChats();renderNotifications();}
+    function renderFeed(){$("feed").innerHTML=posts.map(p=>`<article class="card"><div class="post-head"><div class="avatar ${p.cls||""}">${p.avatar}</div><div style="flex:1"><div class="user">${p.name}</div><div class="handle">${p.handle} · ${p.time}</div></div></div><div class="post-text">${p.text}</div><div class="post-actions"><button class="action like" onclick="likePost(this)">♡ ${p.likes}</button><button class="action" onclick="toast('Los comentarios serán el próximo módulo 💬')">◯ ${p.comments}</button><button class="action" onclick="toast('Publicación compartida ✨')">↗ Compartir</button></div></article>`).join("");}
+    function renderDiscover(list=people){$("discover").innerHTML=list.map(p=>`<article class="card community"><div class="avatar ${p.cls||""}">${p.avatar}</div><div class="community-info"><b>${p.name}</b><small>${p.tag}</small><small>${p.desc}</small></div><button class="btn secondary" onclick="follow(this)">Seguir</button></article>`).join("")||'<div class="card">No encontramos resultados.</div>';}
+    function renderCommunities(){$("communityList").innerHTML=communities.map(c=>`<article class="card community"><div class="avatar ${c.cls||""}">${c.avatar}</div><div class="community-info"><b>${c.name}</b><small>${c.desc}</small><small>${c.members}</small></div><button class="btn primary" onclick="join(this)">Unirme</button></article>`).join("");}
+    function renderChats(){$("chatList").innerHTML=chats.map(c=>`<div class="chat"><div class="avatar ${c[4]}">${c[2]}</div><div class="chat-main"><b>${c[0]}</b><span>${c[1]}</span></div><small class="handle">${c[3]}</small><span class="online"></span></div>`).join("");}
+    function renderNotifications(){$("notificationsList").innerHTML=[["♡","Sofía le dio me gusta a tu publicación.","hace 4 min"],["♧","Te invitaron a unirte a NEXORA Creators.","hace 22 min"],["◉","Mateo comenzó a seguirte.","hace 1 h"],["✦","Hay 3 comunidades nuevas que podrían interesarte.","ayer"]].map(n=>`<div class="notification"><div class="avatar">${n[0]}</div><div><p>${n[1]}</p><small>${n[2]}</small></div></div>`).join("");}
+    function showView(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));$(id).classList.add("active");document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("active",n.dataset.view===id));window.scrollTo({top:0,behavior:"smooth"});}
+    document.querySelectorAll(".nav-item").forEach(n=>n.addEventListener("click",()=>showView(n.dataset.view)));
+    function likePost(btn){btn.classList.toggle("liked");const m=btn.textContent.match(/\d+/);const n=Number(m?.[0]||0)+(btn.classList.contains("liked")?1:-1);btn.textContent=`${btn.classList.contains("liked")?"♥":"♡"} ${n}`;}
+    function follow(btn){btn.textContent=btn.textContent==="Seguir"?"Siguiendo ✓":"Seguir";btn.classList.toggle("primary");toast(btn.textContent==="Siguiendo ✓"?"Ahora seguís a esta persona":"Dejaste de seguir");}
+    function join(btn){btn.textContent=btn.textContent==="Unirme"?"Miembro ✓":"Unirme";toast(btn.textContent==="Miembro ✓"?"Te uniste a la comunidad 🎉":"Saliste de la comunidad");}
+    function createPost(){toast("El editor de publicaciones será conectado a Firestore próximamente ✨");}
+    function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.remove("show"),2600);}
+    function filterExplore(){const q=$("searchInput").value.toLowerCase().trim();renderDiscover(people.filter(p=>(p.name+" "+p.tag+" "+p.desc).toLowerCase().includes(q)));}
+    function toggleMenu(force){const menu=$("userMenu");menu.classList.toggle("hidden",typeof force==="boolean"?!force:!menu.classList.contains("hidden"));}
+    $("userMenuBtn").addEventListener("click",()=>toggleMenu());$("quickNotify").addEventListener("click",()=>showView("notifications"));document.addEventListener("click",e=>{if(!e.target.closest("#userMenu")&&!e.target.closest("#userMenuBtn"))toggleMenu(true)});
+  </script>
+</body>
+</html>
