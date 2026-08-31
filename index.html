@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#09090f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NEXORA">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
 <title>NEXORA</title>
 <style>
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#09090f;color:#f5f5f7;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
@@ -56,6 +62,9 @@ import {
 import {
  getFirestore,doc,getDoc,setDoc,updateDoc,serverTimestamp,runTransaction,collection,query,where,getDocs
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+ getStorage,ref,uploadBytes,getDownloadURL
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-storage.js";
 
 const firebaseConfig={
  apiKey:"AIzaSyD4c61NXLgXy1XH9I2PxOeoqYhcPwtyjwo",
@@ -67,7 +76,7 @@ const firebaseConfig={
 };
 const app=initializeApp(firebaseConfig);
 const auth=initializeAuth(app,{persistence:[browserLocalPersistence,browserSessionPersistence],popupRedirectResolver:browserPopupRedirectResolver});
-const db=getFirestore(app),provider=new GoogleAuthProvider();
+const db=getFirestore(app),storage=getStorage(app),provider=new GoogleAuthProvider();
 provider.setCustomParameters({prompt:"select_account"});
 
 const login=document.getElementById("login"),appView=document.getElementById("app");
@@ -89,65 +98,20 @@ document.getElementById("googleBtn").onclick=async()=>{
 };
 
 async function ensureProfile(user){
- const refUser=doc(db,"users",user.uid);
- const snap=await getDoc(refUser);
-
+ const refUser=doc(db,"users",user.uid), snap=await getDoc(refUser);
  if(!snap.exists()){
-  const base=(user.displayName||"Nexorian")
-    .trim()
-    .replace(/[^\p{L}\p{N}_.-]/gu,"")
-    .slice(0,18)||"Nexorian";
-
-  let username=base;
-  let n=0;
-
+  const base=(user.displayName||"Nexorian").trim().replace(/\s+/g,"").slice(0,18)||"Nexorian";
+  let username=base, n=0;
   while(true){
-   const usernameRef=doc(db,"usernames",username.toLowerCase());
-   const usernameSnap=await getDoc(usernameRef);
-
-   if(!usernameSnap.exists()){
-    try{
-     await runTransaction(db,async tx=>{
-      const existingUser=await tx.get(refUser);
-      const existingUsername=await tx.get(usernameRef);
-
-      if(existingUser.exists()) return;
-      if(existingUsername.exists()) throw new Error("USERNAME_TAKEN");
-
-      tx.set(refUser,{
-       username,
-       usernameLower:username.toLowerCase(),
-       photoURL:user.photoURL||"",
-       email:user.email||"",
-       createdAt:serverTimestamp(),
-       lastConnection:serverTimestamp()
-      });
-
-      tx.create(usernameRef,{
-       uid:user.uid,
-       createdAt:serverTimestamp()
-      });
-     });
-     break;
-    }catch(e){
-     if(e.message==="USERNAME_TAKEN"){
-      n++;
-      username=(base.slice(0,16)+n).slice(0,18);
-      continue;
-     }
-     throw e;
-    }
-   }
-
-   n++;
-   username=(base.slice(0,16)+n).slice(0,18);
+   const q=await getDocs(query(collection(db,"users"),where("usernameLower","==",username.toLowerCase())));
+   if(q.empty)break; n++; username=(base.slice(0,16)+n).slice(0,18);
   }
- }else{
-  await updateDoc(refUser,{lastConnection:serverTimestamp()});
- }
-
- const fresh=await getDoc(refUser);
- currentProfile={id:user.uid,...fresh.data()};
+  await setDoc(refUser,{
+   username,usernameLower:username.toLowerCase(),photoURL:user.photoURL||"",
+   email:user.email||"",createdAt:serverTimestamp(),lastConnection:serverTimestamp()
+  });
+ }else await updateDoc(refUser,{lastConnection:serverTimestamp()});
+ const fresh=await getDoc(refUser); currentProfile={id:user.uid,...fresh.data()};
  updateMini();
 }
 function updateMini(){if(currentProfile?.photoURL){miniAvatar.src=currentProfile.photoURL;miniAvatar.classList.remove("hidden")}else miniAvatar.classList.add("hidden")}
@@ -171,7 +135,7 @@ function render(page){
  profile:`<h2 class="title">Mi perfil</h2>
  <section class="panel"><div class="profile-head"><img id="profilePhoto" src="${esc(p.photoURL||"")}" alt="Foto"><div><h2>${esc(p.username||"Usuario")}</h2><p>Tu perfil de NEXORA</p></div></div>
  <div class="field"><label>Nombre de usuario</label><input id="username" maxlength="18" value="${esc(p.username||"")}"><div class="notice">Tu nombre de usuario es público. No puede repetirse.</div></div>
- <div class="field"><label>Foto de perfil</label><div class="notice">Por ahora NEXORA usa la foto de tu cuenta de Google. La subida de fotos propias se podrá activar más adelante con un servicio de almacenamiento.</div></div>
+ <div class="field"><label>Foto de perfil</label><input id="photoFile" type="file" accept="image/jpeg,image/png,image/webp"><div class="notice">La foto será visible en tu perfil público.</div></div>
  <button id="saveProfile" class="primary" style="margin-top:16px">Guardar cambios</button><div id="profileMsg" class="notice hidden"></div>
  <div class="info"><div><b>Correo electrónico</b><span>${esc(u?.email||"")}</span></div><div><b>Fecha de registro</b><span>${esc(fmtDate(p.createdAt))}</span></div><div><b>Última conexión</b><span>${esc(fmtDate(p.lastConnection))}</span></div></div>
  <div class="notice">🔒 El correo, la fecha de registro y la última conexión son datos privados y no se muestran a otros usuarios.</div>
@@ -183,92 +147,45 @@ function render(page){
 }
 
 async function saveProfile(){
- const input=document.getElementById("username");
- const msg=document.getElementById("profileMsg");
- const btn=document.getElementById("saveProfile");
-
+ const input=document.getElementById("username"), file=document.getElementById("photoFile"), msg=document.getElementById("profileMsg"), btn=document.getElementById("saveProfile");
  let username=input.value.trim().replace(/\s+/g," ");
-
- if(username.length<3||username.length>18){
-  msg.textContent="El nombre debe tener entre 3 y 18 caracteres.";
-  msg.classList.remove("hidden");
-  return;
- }
-
- if(!/^[\p{L}\p{N}_.-]+$/u.test(username)){
-  msg.textContent="Usá solo letras, números, punto, guion o guion bajo.";
-  msg.classList.remove("hidden");
-  return;
- }
-
- btn.disabled=true;
- msg.classList.remove("hidden");
- msg.textContent="Guardando…";
-
+ if(username.length<3||username.length>18){msg.textContent="El nombre debe tener entre 3 y 18 caracteres.";msg.classList.remove("hidden");return}
+ if(!/^[\p{L}\p{N}_.-]+$/u.test(username)){msg.textContent="Usá solo letras, números, punto, guion o guion bajo.";msg.classList.remove("hidden");return}
+ btn.disabled=true;msg.classList.remove("hidden");msg.textContent="Guardando…";
  try{
-  const user=auth.currentUser;
-  if(!user) throw new Error("NO_AUTH");
-
-  const userRef=doc(db,"users",user.uid);
+  const user=auth.currentUser,userRef=doc(db,"users",user.uid);
   const lower=username.toLowerCase();
-  const oldLower=(currentProfile?.usernameLower||"").toLowerCase();
-
   await runTransaction(db,async tx=>{
-   const userSnap=await tx.get(userRef);
-   if(!userSnap.exists()) throw new Error("PROFILE_MISSING");
-
-   const newUsernameRef=doc(db,"usernames",lower);
-   const newUsernameSnap=await tx.get(newUsernameRef);
-
-   if(newUsernameSnap.exists() && newUsernameSnap.data().uid!==user.uid){
-    throw new Error("USERNAME_TAKEN");
-   }
-
-   if(lower!==oldLower){
-    tx.create(newUsernameRef,{
-     uid:user.uid,
-     createdAt:serverTimestamp()
-    });
-
-    if(oldLower){
-     const oldUsernameRef=doc(db,"usernames",oldLower);
-     const oldUsernameSnap=await tx.get(oldUsernameRef);
-     if(oldUsernameSnap.exists() && oldUsernameSnap.data().uid===user.uid){
-      tx.delete(oldUsernameRef);
-     }
-    }
-   }
-
-   tx.update(userRef,{
-    username,
-    usernameLower:lower
-   });
+   const q=await getDocs(query(collection(db,"users"),where("usernameLower","==",lower)));
+   if(!q.empty&&q.docs.some(d=>d.id!==user.uid))throw new Error("USERNAME_TAKEN");
+   tx.update(userRef,{username,usernameLower:lower});
   });
-
-  await ensureProfile(user);
-  render("profile");
-
-  const newMsg=document.getElementById("profileMsg");
-  newMsg.classList.remove("hidden");
-  newMsg.textContent="✓ Perfil actualizado.";
+  if(file.files[0]){
+   const f=file.files[0];
+   if(f.size>5*1024*1024)throw new Error("PHOTO_TOO_LARGE");
+   const storageRef=ref(storage,`profilePhotos/${user.uid}/avatar`);
+   await uploadBytes(storageRef,f,{contentType:f.type});
+   const url=await getDownloadURL(storageRef);
+   await updateDoc(userRef,{photoURL:url});
+  }
+  await ensureProfile(user);render("profile");document.getElementById("profileMsg").textContent="✓ Perfil actualizado.";
  }catch(e){
   console.error(e);
   msg.classList.remove("hidden");
-
-  if(e.message==="USERNAME_TAKEN"){
-   msg.textContent="Ese nombre de usuario ya está ocupado.";
-  }else if(e.message==="NO_AUTH"){
-   msg.textContent="Tu sesión expiró. Volvé a iniciar sesión.";
-  }else if(e.message==="PROFILE_MISSING"){
-   msg.textContent="No se encontró tu perfil. Volvé a iniciar sesión.";
-  }else{
-   msg.textContent="No se pudieron guardar los cambios: "+(e.code||e.message);
-  }
- }finally{
-  btn.disabled=false;
- }
+  msg.textContent=e.message==="USERNAME_TAKEN"?"Ese nombre de usuario ya está ocupado.":e.message==="PHOTO_TOO_LARGE"?"La foto supera el límite de 5 MB.":"No se pudieron guardar los cambios: "+(e.code||e.message);
+ }finally{btn.disabled=false}
 }
+
 document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>render(b.dataset.page)));
+
+
+// PWA: registra el Service Worker para permitir instalación y caché básica.
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { scope: "./" })
+      .catch(err => console.warn("NEXORA PWA: no se pudo registrar el Service Worker", err));
+  });
+}
 </script>
 </body>
 </html>

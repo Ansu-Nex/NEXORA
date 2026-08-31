@@ -1,0 +1,15 @@
+{
+  "name": "NEXORA",
+  "short_name": "NEXORA",
+  "description": "NEXORA — Comunidad, creatividad y conexión.",
+  "lang": "es-AR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#09090f",
+  "theme_color": "#09090f",
+  "categories": ["social", "communication"],
+  "prefer_related_applications": false
+}
